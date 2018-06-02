@@ -238,7 +238,7 @@ class AnalyzeFRDImages(object):
         """
         filepath = utils.FilePath(self.setup_csv_file)
         print('aaaaaaaaaaaaaaaaaaaaaaaa',filepath.basename)
-        filepath.add_prefix("df_config_")
+        #filepath.add_prefix("df_config_")
 
         df_config = pd.read_csv(self.setup_csv_file)[0:len(self.fitsfiles)]
         df_config["radii_at_EE"] = radii_at_EE
@@ -246,8 +246,8 @@ class AnalyzeFRDImages(object):
         df_config["y_out_fiber_dist"] = df_config["radii_at_EE"]*self.PIXEL_SCALE
         df_config = pd.concat([self._get_df(df_config,frat=str(i).zfill(2)) for i in range(1,self.NUM_F_NUMBERS+1)],ignore_index=True)
         if save:
-            df_config.to_csv(os.path.join(self.FOLDER_CSV_SAVE,filepath.basename))
-            print("Saved to:",os.path.join(self.FOLDER_CSV_SAVE,filepath.basename))
+            df_config.to_csv(os.path.join(self.FOLDER_CSV_SAVE,'df_config_{}'.format(filepath.basename)))
+            print(os.path.join(self.FOLDER_CSV_SAVE,filepath.basename))
         return df_config
     
     def _percent2mm(self,percent):
