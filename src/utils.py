@@ -20,7 +20,7 @@ import os
 
 from astropy.visualization import LogStretch, SqrtStretch, AsinhStretch, HistEqStretch,ZScaleInterval
 from astropy.visualization.mpl_normalize import ImageNormalize
-from astroquery.simbad import Simbad
+
 
 norm_mean_sub = lambda x: x - np.nanmean(x)
 norm_mean     = lambda x: x/np.nanmean(x)
@@ -492,33 +492,6 @@ def poly_detrend(x,y,order,return_coeffs=False,plot=False):
     else:
         return residual, predicted
 
-from PyAstronomy.pyasl import binningx0dt
-
-def bin_data(x,y,numbins):
-        """
-        Returns a dataframe with binned data.
-        
-        INPUT:
-            numbins is the number of bins 
-        
-        OUTPUT:
-            Dataframe with the binned data. Columns x, y
-        """
-        timestamp = x
-        rel_flux  = y
-        
-        rel_flux_rms_per_bin = np.zeros(numbins)
-        bins = np.arange(numbins)+1
-        for i in bins:
-            if i == 1:
-                rms = np.std(rel_flux)
-            else:
-                bin_timeAndRelFlux, pointsPerBin = binningx0dt(timestamp, rel_flux,useBinCenter=True, removeNoError=True, reduceBy=i,useMeanX=True)
-                rms = np.std(bin_timeAndRelFlux[::,1])
-                #print("len calc",len(bin_timeAndRelFlux[::,1]))
-            rel_flux_rms_per_bin[i-1] = rms
-        df_binned = pd.DataFrame(zip(bin_timeAndRelFlux[::,0],bin_timeAndRelFlux[::,1]),columns=["x","y"])
-        return df_binned #, rel_flux_rms_per_bin
 
 def sigma_clip(df,num):
     """
@@ -732,30 +705,6 @@ def sigma_delta(tau=0.01*24.*60.,gamma=1/2.,error=4000.,T=0.142*24.*60.):
     sigma_delta = error/(np.sqrt(1.-tau/T)*(np.sqrt(gamma*T)))
     return sigma_delta
 
-def get_simbad_fluxes(name):
-    customSimbad = Simbad()
-    customSimbad.add_votable_fields('flux(V)','flux(R)','flux(I)','flux(J)','flux(H)','flux(g)','flux(r)','flux(i)')
-    #customSimbad.get_votable_fields()
-    columns = ["FLUX_V","FLUX_R","FLUX_I","FLUX_J","FLUX_H","FLUX_g","FLUX_r","FLUX_i"]
-    try:
-        table = customSimbad.query_object(name)
-        df = table[columns].to_pandas()
-    except Exception as e:
-        print("ERROR:",e)
-        df = pd.DataFrame(np.nan*np.ones(len(columns))).T
-        df.columns = columns
-    df["name"] = name
-    return df
-
-def get_simbad_fluxes_from_list(names):
-    res = [get_simbad_fluxes(i) for i in names]
-    return pd.concat(res)
-
-def get_bright_names(names):
-    return [i for i in names if "Kepler" not in i and "K2" not in i and "epic" not in i and "EPIC" not in i]
-
-def get_k2_names(names):
-    return [i for i in names if "K2" in i]
 
 #def sigma_clip_savgol(x,win=101,sigma=3.):
 #    x_savgol = everest.math.SavGol(x,win=101)
