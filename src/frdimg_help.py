@@ -1,11 +1,12 @@
 import pandas as pd
 import numpy as np
-
+import utils
 
 def get_EE_from_rad_in_pix(df,radius_in_pix):
-    #print("max",df.radii.values.max())
-    #return np.interp(radius_in_pix,df.radii.values,df.EE.values)
-    return df[df["radii"] > radius_in_pix]["EE"].values[0]
+    print("Now getting EE from rad in pix",np.interp(radius_in_pix,df.radii.values,df.EE.values))
+    #print("Now getting EE from rad in pix",df[df["radii"] > radius_in_pix]["EE"].values[0])
+    return np.interp(radius_in_pix,df.radii.values,df.EE.values)
+    #return df[df["radii"] > radius_in_pix]["EE"].values[0]
 
     #r_at_EE = df[df["EE"] > get_rad_at_EE]["radii"].values[0]
     #print(r_at_EE)

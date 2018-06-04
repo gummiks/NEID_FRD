@@ -172,7 +172,8 @@ class AnalyzeFRDImages(object):
                  get_rad_at_EE=0.96,
                  MAXRAD_FACTOR=0.54,
                  fwzm_z=20,
-                 force_max_radii_to_390=False):
+                 force_max_radii_to_390=False,
+                 use_azimuthal_averaging=False):
         self.fitsfiles        = fitsfiles
         self.plot_suffix      = plot_suffix
         self.plot_folder      = plot_folder
@@ -186,6 +187,7 @@ class AnalyzeFRDImages(object):
         self.BACKUP_FILE_NAME = self.FOLDER_CSV_SAVE + self.plot_suffix + "_radii_fwhm_subtracted.npz"
         self.fwzm_z           = fwzm_z
         self.force_max_radii_to_390=force_max_radii_to_390
+        self.use_azimuthal_averaging = use_azimuthal_averaging
         utils.make_dir(self.FOLDER_CSV_SAVE)
         
     def _get_df(self,df_config,frat,startnum=0):
@@ -275,7 +277,8 @@ class AnalyzeFRDImages(object):
                     plot_suffix=self.plot_suffix,
                     plot_folder=self.plot_folder,
                     fwzm_z=self.fwzm_z,
-                    force_max_radii_to_390=self.force_max_radii_to_390);
+                    force_max_radii_to_390=self.force_max_radii_to_390,
+                    use_azimuthal_averaging=self.use_azimuthal_averaging);
             print("Radii at EE:",frd.r_ee)
             self.radii_at_EE[i] = frd.r_ee
             self.fwhm[i] = frd.max_radii_for_EE

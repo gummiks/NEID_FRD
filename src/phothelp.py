@@ -132,7 +132,8 @@ def get_encircled_energy_and_rad_at_EE(data,x,y,radii,get_rad_at_EE=0.9,plot=Fal
     
     df = pd.DataFrame(zip(radii,EE),columns=["radii","EE"])
 
-    r_at_EE = df[df["EE"] > get_rad_at_EE]["radii"].values[0]
+    #r_at_EE = df[df["EE"] > get_rad_at_EE]["radii"].values[0]
+    r_at_EE = np.interp(get_rad_at_EE,df.EE.values,df.radii.values)
 
     if plot:
         if ax==None:
