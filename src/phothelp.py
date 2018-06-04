@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import gklib as gk
+from astropy.stats import SigmaClip
 
 
 class CircularBackgroundSubractor(object):
@@ -37,7 +38,7 @@ class CircularBackgroundSubractor(object):
         mask = self.aper.to_mask()[0].to_image(self.data.shape)
 
         # use sigma clipping
-        sigma_clip = photutils.SigmaClip(sigma=3., iters=10)
+        sigma_clip = SigmaClip(sigma=3., iters=10)
 
         bkg_estimator = photutils.MedianBackground()
         self.bkg = photutils.Background2D(self.data, self.box_size, filter_size=(3, 3),
