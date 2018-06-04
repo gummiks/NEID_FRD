@@ -1,3 +1,4 @@
+from __future__ import print_function
 import utils
 import os
 import numpy as np
@@ -60,7 +61,7 @@ class FRDImg(object):
         # -------------
         # Plot #1: Normal image
         x,y = self.fimg.get_centroid(plot_lines=True,ax=ax_img)
-        self.fimg.ax.set_title("Bias + Dark Subtracted (Hist stretch)")
+        self.fimg.ax.set_title("Hist stretch")
         #cbar_ax = fig.add_axes([0.38, 0.59, 0.015, 0.3],label="Counts")
         #fig.colorbar(self.fimg.im, cax=cbar_ax)
         
@@ -75,7 +76,7 @@ class FRDImg(object):
         # -------------
         # Plot #3: Background subtracted image
         self.fimg.data = data_back_sub
-        self.fimg.plot(ax=ax_img_bkg_sub,colorbar=False,title="Bias + Dark + Background subtracted (linear stretch)",stretch="linear")
+        self.fimg.plot(ax=ax_img_bkg_sub,colorbar=False,title="Background subtracted (linear stretch)",stretch="linear")
         # add colorbar
         #cbar_ax = fig.add_axes([0.38, 0.09, 0.015, 0.3],label="Counts")
         #fig.colorbar(self.fimg.im, cax=cbar_ax)
@@ -129,7 +130,7 @@ class FRDImg(object):
         ax_img_bkg_sub.annotate("EE100% @ r = "+str(MAXRAD_FACTOR*2)+" HWHM",xy=(x,y+self.max_radii_for_EE),color="white",fontsize=8)
         
         # Hist plot
-        self.fimg.plot(ax=ax_img_bkg_sub2,colorbar=False,title="Bias + Dark + Background subtracted (Hist stretch)",stretch="hist")
+        self.fimg.plot(ax=ax_img_bkg_sub2,colorbar=False,title="Background subtracted (Hist stretch)",stretch="hist")
         aper = photutils.CircularAperture((x,y),r=self.r_ee)
         aper.plot(ax=ax_img_bkg_sub2,color="green")
         ax_img_bkg_sub2.annotate("EE"+str(100*get_rad_at_EE)+"%",xy=(x,y+self.r_ee),color="white",fontsize=8)
@@ -147,9 +148,6 @@ class FRDImg(object):
         print("Saved file:",plot_folder + self.basename+"_"+plot_suffix+".csv")
         
 
-
-
-        
     
 class AnalyzeFRDImages(object):
     """
