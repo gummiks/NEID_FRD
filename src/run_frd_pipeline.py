@@ -48,7 +48,7 @@ except Exception as e:
 
 def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_storage\\NEID\\FRD_data\\20180602_HPF_fiberC_200um\\",
                         FOLDER_CSV_SETUP = None,FOLDER_CSV_SAVE = None, PLOT_FOLDER = None, MASTER_PLOT_FOLDER = None, TITLE = None,
-                        MAXRAD_FACTOR      = 0.56, FWZM = 200.,FIBER_NAME = 'f02'):
+                        MAXRAD_FACTOR      = 0.56, FWZM = 200.,FIBER_NAMES = ['f02']):
                         
     print('\n\n RUNNING FRD PIPELINE FOR {}\n\n'.format(TITLE))
 
@@ -63,43 +63,45 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
         MASTER_PLOT_FOLDER = os.path.join(BASEFOLDER,"ANALYSIS/MASTER_PLOTS/")
     if TITLE == None:
         TITLE = BASEFOLDER.split(os.sep)[-2]    
-
-
-    # Files
-    setup_csv_files  = sorted(glob.glob(FOLDER_CSV_SETUP+"*.csv"))
-    fitsfiles_f01    = glob.glob(BASEFOLDER+FIBER_NAME+"/*.fits")
-
-    plt.switch_backend("agg")
-
-    ##########################
-    # MAIN analysis step
-    AFRDImg = AnalyzeFRDImages(fitsfiles = sorted(fitsfiles_f01),
-                               plot_suffix = FIBER_NAME,
-                               plot_folder = PLOT_FOLDER,
-                               setup_csv_file = setup_csv_files[0],
-                               FOLDER_CSV_SAVE = FOLDER_CSV_SAVE,
-                               motorized = True,
-                               MAXRAD_FACTOR = MAXRAD_FACTOR,
-                               fwzm_z = FWZM,
-                               use_azimuthal_averaging = True)
-    AFRDImg.analyze_all_frames()
-    ##########################
-
-
-    ##########################
-    # Find  .csv files
-    list_of_df_config = sorted(glob.glob(FOLDER_CSV_SAVE+"*.csv"))
-
-    df_config_f01 = pd.read_csv(list_of_df_config[0])
-
-    df_config_f01 = add_y_in_input(df_config_f01)
-
-    df_config_f01 = AFRDImg._get_EE_in_input_cone(df_config_f01,suffix=FIBER_NAME)
-    ##########################
-
-    # Plot main plot
-    frd_plot.plot_final_panel(df_config_f01,fibername=FIBER_NAME,title=TITLE,outfolder=MASTER_PLOT_FOLDER)
+        
+    # Run for all fibers
+    for FIBER_NAME in FIBER_NAMES: 
     
+        # Files
+        setup_csv_files  = sorted(glob.glob(FOLDER_CSV_SETUP+"*.csv"))
+        fitsfiles_f01    = glob.glob(BASEFOLDER+FIBER_NAME+"/*.fits")
+    
+        plt.switch_backend("agg")
+    
+        ##########################
+        # MAIN analysis step
+        AFRDImg = AnalyzeFRDImages(fitsfiles = sorted(fitsfiles_f01),
+                                plot_suffix = FIBER_NAME,
+                                plot_folder = PLOT_FOLDER,
+                                setup_csv_file = setup_csv_files[0],
+                                FOLDER_CSV_SAVE = FOLDER_CSV_SAVE,
+                                motorized = True,
+                                MAXRAD_FACTOR = MAXRAD_FACTOR,
+                                fwzm_z = FWZM,
+                                use_azimuthal_averaging = True)
+        AFRDImg.analyze_all_frames()
+        ##########################
+    
+    
+        ##########################
+        # Find  .csv files
+        list_of_df_config = sorted(glob.glob(FOLDER_CSV_SAVE+"*.csv"))
+    
+        df_config_f01 = pd.read_csv(list_of_df_config[0])
+    
+        df_config_f01 = add_y_in_input(df_config_f01)
+    
+        df_config_f01 = AFRDImg._get_EE_in_input_cone(df_config_f01,suffix=FIBER_NAME)
+        ##########################
+    
+        # Plot main plot
+        frd_plot.plot_final_panel(df_config_f01,fibername=FIBER_NAME,title=TITLE,outfolder=MASTER_PLOT_FOLDER)
+        
     
 if __name__=='__main__':
     fn_analyze_FRD_data() 
