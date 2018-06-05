@@ -34,7 +34,8 @@ class FRDImg(object):
             MAXRAD_FACTOR = 0.54,
             fwzm_z=20,
             use_azimuthal_averaging=True,
-            force_max_radii_to_390=False):
+            force_max_radii_to_390=False,
+            soft_bg_est = True):
         """
         Run the analysis
         
@@ -44,6 +45,7 @@ class FRDImg(object):
             get_rad_at_EE = 0.96
             FACTOR = 0.54
             fwzm_z=20
+            soft_bg_est = True : If False, will not use software background estimator
 
         OUTPUT:
             Saves files to folders  
@@ -68,23 +70,27 @@ class FRDImg(object):
         
         # -------------
         # Plot #2: Background estimation
-        x,y = self.fimg.get_centroid()
-        print("Centroids",x,y)
-        CBS = phothelp.CircularBackgroundSubractor(self.fimg.data,x=x,y=y,r=400)
-        data_back_sub = CBS.subtract_background(plot_background=True,ax=ax_img_bkg)
-        self.subtracted_value = CBS.subtracted_value
-        
-        # -------------
-        # Plot #3: Background subtracted image
-        self.fimg.data = data_back_sub
-        self.fimg.plot(ax=ax_img_bkg_sub,colorbar=False,title="Background subtracted (linear stretch)",stretch="linear")
-        # add colorbar
-        #cbar_ax = fig.add_axes([0.38, 0.09, 0.015, 0.3],label="Counts")
-        #fig.colorbar(self.fimg.im, cax=cbar_ax)
-        # Get centroid again after taking out the background
-        x,y = self.fimg.get_centroid()        
-        
-        
+        if soft_bg_est == True:
+            #x,y = self.fimg.get_centroid()
+            #print("Centroids",x,y)
+            CBS = phothelp.CircularBackgroundSubractor(self.fimg.data,x=x,y=y,r=400)
+            data_back_sub = CBS.subtract_background(plot_background=True,ax=ax_img_bkg)
+            self.subtracted_value = CBS.subtracted_value
+            
+            # -------------
+            # Plot #3: Background subtracted image
+            self.fimg.data = data_back_sub    
+            self.fimg.plot(ax=ax_img_bkg_sub,colorbar=False,title="Background subtracted (linear stretch)",stretch="linear")
+            # add colorbar
+            #cbar_ax = fig.add_axes([0.38, 0.09, 0.015, 0.3],label="Counts")
+            #fig.colorbar(self.fimg.im, cax=cbar_ax)
+            # Get centroid again after taking out the background
+            x,y = self.fimg.get_centroid()  
+            
+        else:
+            self.subtracted_value = 0 
+
+                  
         # -------------
         # Plot #4: Cuts
         if use_azimuthal_averaging == True:
@@ -172,7 +178,8 @@ class AnalyzeFRDImages(object):
                  MAXRAD_FACTOR=0.54,
                  fwzm_z=20,
                  force_max_radii_to_390=False,
-                 use_azimuthal_averaging=False):
+                 use_azimuthal_averaging=False,
+                 soft_bg_est = True):
         self.fitsfiles        = fitsfiles
         self.plot_suffix      = plot_suffix
         self.plot_folder      = plot_folder
@@ -187,6 +194,7 @@ class AnalyzeFRDImages(object):
         self.fwzm_z           = fwzm_z
         self.force_max_radii_to_390=force_max_radii_to_390
         self.use_azimuthal_averaging = use_azimuthal_averaging
+        self.soft_bg_est = soft_bg_est
         utils.make_dir(self.FOLDER_CSV_SAVE)
         
     def _get_df(self,df_config,frat,startnum=0):
@@ -209,6 +217,8 @@ class AnalyzeFRDImages(object):
         df = df_config[df_config.filename.isin(["f_psm_"+frat+"_d_"+str(i).zfill(2)+".fits" for i in range(1,12)])]
         df = df.reset_index(drop=True)
         df = df[startnum:]
+        
+        print('bbbbbbbbbbbbbbbbbbb',df)
         
         #if method=="FIRST":
         df["x_out_fiber_dist_delta"] = df["x_out_fiber_dist"].values[0] - df["x_out_fiber_dist"].values
@@ -279,7 +289,8 @@ class AnalyzeFRDImages(object):
                     plot_folder=self.plot_folder,
                     fwzm_z=self.fwzm_z,
                     force_max_radii_to_390=self.force_max_radii_to_390,
-                    use_azimuthal_averaging=self.use_azimuthal_averaging);
+                    use_azimuthal_averaging=self.use_azimuthal_averaging,
+                    soft_bg_est = self.soft_bg_est);
             print("Radii at EE:",frd.r_ee)
             self.radii_at_EE[i] = frd.r_ee
             self.fwhm[i] = frd.max_radii_for_EE

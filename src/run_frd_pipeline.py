@@ -48,7 +48,7 @@ except Exception as e:
 
 def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_storage\\NEID\\FRD_data\\20180602_science6_polished_50um\\",
                         FOLDER_CSV_SETUP = None,FOLDER_CSV_SAVE = None, PLOT_FOLDER = None, MASTER_PLOT_FOLDER = None, TITLE = None,
-                        MAXRAD_FACTOR      = 0.56, FWZM = 200.,FIBER_NAMES = None):
+                        MAXRAD_FACTOR      = 0.56, FWZM = 200.,FIBER_NAMES = None, soft_bg_est = True):
     print(BASEFOLDER)                   
     if FOLDER_CSV_SETUP == None:
         FOLDER_CSV_SETUP = os.path.join(BASEFOLDER,"ANALYSIS","CSV_SETUP","")
@@ -92,7 +92,8 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
                                 motorized = True,
                                 MAXRAD_FACTOR = MAXRAD_FACTOR,
                                 fwzm_z = FWZM,
-                                use_azimuthal_averaging = True)
+                                use_azimuthal_averaging = True,
+                                soft_bg_est = soft_bg_est)
         AFRDImg.analyze_all_frames()
         ##########################
     
@@ -114,10 +115,10 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
     
 
 home = 'C:\Users\szk381\Google Drive\PSU-file_storage\NEID\FRD_data'
-fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,"20180602_science6_polished_200um",""),FIBER_NAMES = ['HE1'])
+fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,"20180605_science4_brass_both_50um",""),FIBER_NAMES = ['HR1'],soft_bg_est = False)
 
 '''
     data_folders = os.listdir(home)
     for i in data_folders:
         fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,i,"")) 
-'''
+''' 
