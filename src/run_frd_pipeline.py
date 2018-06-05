@@ -46,28 +46,29 @@ except Exception as e:
    
 #BASEFOLDER         = "/Users/gks/Dropbox/mypylib/data/NEID_FRD/20180602_HPF_fiberC_200um/"   
 
-def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_storage\\NEID\\FRD_data\\20180602_science6_polished_25um_swap_ends\\",
+def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_storage\\NEID\\FRD_data\\20180602_science6_polished_50um\\",
                         FOLDER_CSV_SETUP = None,FOLDER_CSV_SAVE = None, PLOT_FOLDER = None, MASTER_PLOT_FOLDER = None, TITLE = None,
-                        MAXRAD_FACTOR      = 0.56, FWZM = 200.,FIBER_NAMES = ['HR2','HR3']):
-                        
+                        MAXRAD_FACTOR      = 0.56, FWZM = 200.,FIBER_NAMES = None):
+    print(BASEFOLDER)                   
     if FOLDER_CSV_SETUP == None:
-        FOLDER_CSV_SETUP = os.path.join(BASEFOLDER,"ANALYSIS/CSV_SETUP/")
+        FOLDER_CSV_SETUP = os.path.join(BASEFOLDER,"ANALYSIS","CSV_SETUP","")
     if FOLDER_CSV_SAVE == None:
-        FOLDER_CSV_SAVE = os.path.join(BASEFOLDER,"ANALYSIS/CSV_RESULTS/")    
+        FOLDER_CSV_SAVE = os.path.join(BASEFOLDER,"ANALYSIS","CSV_RESULTS","")    
     if PLOT_FOLDER == None:
-        PLOT_FOLDER = os.path.join(BASEFOLDER,"ANALYSIS/PLOTS/")
+        PLOT_FOLDER = os.path.join(BASEFOLDER,"ANALYSIS","PLOTS","")
     if MASTER_PLOT_FOLDER == None:
-        MASTER_PLOT_FOLDER = os.path.join(BASEFOLDER,"ANALYSIS/MASTER_PLOTS/")
+        MASTER_PLOT_FOLDER = os.path.join(BASEFOLDER,"ANALYSIS","MASTER_PLOTS","")
     if TITLE == None:
         TITLE = BASEFOLDER.split(os.sep)[-2]    
         
     if FIBER_NAMES == None:
         contents = np.array(os.listdir(BASEFOLDER))
-        fiber_dir = np.where(np.isin(contents,['ANALYSIS', 'background', 'bias',  'psm_images']) == False)[0]
+        fiber_dir = np.where(np.isin(contents,['ANALYSIS', 'background', 'bias',  'psm_images','desktop.ini']) == False)[0]
         FIBER_NAMES = contents[fiber_dir]
+        print(FIBER_NAMES)
         
 
-    print('\n\n RUNNING FRD PIPELINE FOR {}\n\n'.format(TITLE))
+    print('\n\nRUNNING FRD PIPELINE FOR {}\n\n'.format(TITLE))
         
     # Run for all fibers
     for FIBER_NAME in FIBER_NAMES: 
@@ -109,4 +110,7 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
         
     
 if __name__=='__main__':
-    fn_analyze_FRD_data() 
+    home = 'C:\Users\szk381\Google Drive\PSU-file_storage\NEID\FRD_data'
+    data_folders = os.listdir(home)
+    for i in data_folders:
+        fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,i,"")) 
