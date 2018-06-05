@@ -144,8 +144,8 @@ def get_encircled_energy_and_rad_at_EE(data,x,y,radii,get_rad_at_EE=0.9,plot=Fal
         ax.set_ylabel("Encircled Energy")
         ax.set_title("EE"+gk.num2str(get_rad_at_EE*100,1)+"% at r="+str(r_at_EE))
         
-        ax.vlines(r_at_EE,0,get_rad_at_EE,color="orange",linestyle="--")
-        ax.hlines(get_rad_at_EE,0,r_at_EE,color="orange",linestyle="--")
+        ax.vlines(r_at_EE,0,get_rad_at_EE,color="green",linestyle="--")
+        ax.hlines(get_rad_at_EE,0,r_at_EE,color="green",linestyle="--")
         ax.minorticks_on()
         
     return df, r_at_EE
