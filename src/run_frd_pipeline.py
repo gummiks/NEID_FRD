@@ -76,6 +76,9 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
         # Files
         setup_csv_files  = sorted(glob.glob(FOLDER_CSV_SETUP+"*.csv"))
         fitsfiles_f01    = glob.glob(BASEFOLDER+FIBER_NAME+"/*.fits")
+        
+        if len(fitsfiles_f01) <= 2:
+            next
     
         plt.switch_backend("agg")
     
@@ -109,8 +112,12 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
         frd_plot.plot_final_panel(df_config_f01,fibername=FIBER_NAME,title=TITLE,outfolder=MASTER_PLOT_FOLDER)
         
     
-if __name__=='__main__':
-    home = 'C:\Users\szk381\Google Drive\PSU-file_storage\NEID\FRD_data'
+
+home = 'C:\Users\szk381\Google Drive\PSU-file_storage\NEID\FRD_data'
+fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,"20180602_science6_polished_200um",""),FIBER_NAMES = ['HE1'])
+
+'''
     data_folders = os.listdir(home)
     for i in data_folders:
         fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,i,"")) 
+'''

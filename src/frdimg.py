@@ -50,6 +50,7 @@ class FRDImg(object):
         """
         utils.make_dir(plot_folder)
         fig, ax = plt.subplots(ncols=3,nrows=2,figsize=(20,15))
+        plt.title('FIND ME')
         
         ax_img         = ax.flat[0]
         ax_img_bkg     = ax.flat[1]
