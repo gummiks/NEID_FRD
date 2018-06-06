@@ -88,6 +88,7 @@ class FRDImg(object):
             x,y = self.fimg.get_centroid()  
             
         else:
+            print('Not subtracting backround')
             self.subtracted_value = 0 
 
                   
@@ -218,7 +219,6 @@ class AnalyzeFRDImages(object):
         df = df.reset_index(drop=True)
         df = df[startnum:]
         
-        print('bbbbbbbbbbbbbbbbbbb',df)
         
         #if method=="FIRST":
         df["x_out_fiber_dist_delta"] = df["x_out_fiber_dist"].values[0] - df["x_out_fiber_dist"].values

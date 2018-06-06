@@ -112,10 +112,12 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
         # Plot main plot
         frd_plot.plot_final_panel(df_config_f01,fibername=FIBER_NAME,title=TITLE,outfolder=MASTER_PLOT_FOLDER)
         
+        print('DONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+        
     
 
 home = 'C:\Users\szk381\Google Drive\PSU-file_storage\NEID\FRD_data'
-fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,"20180605_science4_brass_both_50um",""),FIBER_NAMES = ['HR1'],soft_bg_est = False)
+fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,"20180606_science6_cleaned_puck_50um",""),FIBER_NAMES = ['HR2'])
 
 '''
     data_folders = os.listdir(home)
