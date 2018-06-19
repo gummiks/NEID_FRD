@@ -117,7 +117,7 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
     
 
 home = 'C:\Users\szk381\Google Drive\PSU-file_storage\NEID\FRD_data'
-fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,"20180606_science6_cleaned_puck_50um",""),FIBER_NAMES = ['HR2'])
+fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,"20180618_science6_newpuck_50um",""),FIBER_NAMES = ['HE2','HR2','HR1'])
 
 '''
     data_folders = os.listdir(home)
