@@ -20,11 +20,16 @@ class FRDImg(object):
     A class to analyze FRDImages
     """
     
-    def __init__(self,filename):
+    def __init__(self,filename,bias = None):
         self.filename   = filename
         self.basename   = self.filename.split(os.sep)[-1]
         self.fimg       = fitsimg.FitsImageFLI(self.filename)
         print("Trimming problematic first row !")
+        if bias:
+            self.fimg = self.fimg - bias
+            print('Subtracted bias')
+        else:
+            print('Bias not subtracted')
         self.fimg.data = self.fimg.data[1:1027,0:1056]
         
     def run(self,
@@ -170,6 +175,7 @@ class AnalyzeFRDImages(object):
     
     def __init__(self,
                  fitsfiles,
+                 biasframe,
                  plot_suffix,
                  plot_folder,
                  setup_csv_file,
@@ -182,6 +188,7 @@ class AnalyzeFRDImages(object):
                  use_azimuthal_averaging=False,
                  soft_bg_est = True):
         self.fitsfiles        = fitsfiles
+        self.biasframe        = biasframe # Bias  
         self.plot_suffix      = plot_suffix
         self.plot_folder      = plot_folder
         self.setup_csv_file   = setup_csv_file
@@ -281,7 +288,7 @@ class AnalyzeFRDImages(object):
         self.fwhm              = np.zeros(len(self.fitsfiles))
         self.subtracted_values = np.zeros(len(self.fitsfiles))
         for i,fitsfile in enumerate(self.fitsfiles):
-            frd = FRDImg(fitsfile)
+            frd = FRDImg(fitsfile,self.biasframe)
             print("Analyzing file #",i,fitsfile)
             frd.run(get_rad_at_EE=self.get_rad_at_EE,
                     MAXRAD_FACTOR=self.MAXRAD_FACTOR,

@@ -11,6 +11,7 @@ import os
 import frd_plot
 import glob
 import sys
+from astropy.io import fits
 
 # ---------- Graphics ------------
 import matplotlib.pyplot as plt
@@ -67,6 +68,11 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
         FIBER_NAMES = contents[fiber_dir]
         print(FIBER_NAMES)
         
+    try:
+        bias = fits.open(os.path.join(BASEFOLDER,'bias','median_bias.fits'))[0].data
+    except:
+        print('Bias frame not found')
+        
 
     print('\n\nRUNNING FRD PIPELINE FOR {}\n\n'.format(TITLE))
         
@@ -85,6 +91,7 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
         ##########################
         # MAIN analysis step
         AFRDImg = AnalyzeFRDImages(fitsfiles = sorted(fitsfiles_f01),
+                                bias_frame = bias,
                                 plot_suffix = FIBER_NAME,
                                 plot_folder = PLOT_FOLDER,
                                 setup_csv_file = setup_csv_files[0],
