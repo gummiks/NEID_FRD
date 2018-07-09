@@ -83,7 +83,7 @@ def plot_final_panel(df,fibername,title='FRD main analaysis',outfolder=""):
     utils.make_dir(outfolder)
     savename = os.path.join(outfolder,title+"_"+fibername+'.png')
     fig.subplots_adjust(top=0.9)
-    fig.suptitle(title,fontsize=32,y=0.97)
+    fig.suptitle(title+"_"+fibername,fontsize=32,y=0.97)
     fig.savefig(savename,dpi=200)
     print("Saved final plot to {}".format(savename))
     csvout = os.path.join(outfolder,title+"_"+fibername+'.csv')

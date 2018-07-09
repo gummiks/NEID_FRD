@@ -20,18 +20,20 @@ class FRDImg(object):
     A class to analyze FRDImages
     """
     
-    def __init__(self,filename,bias = None):
+    def __init__(self,filename,bias):
         self.filename   = filename
         self.basename   = self.filename.split(os.sep)[-1]
         self.fimg       = fitsimg.FitsImageFLI(self.filename)
         print("Trimming problematic first row !")
-        if bias:
-            self.fimg = self.fimg - bias
+
+        self.fimg.data = self.fimg.data[1:1027,0:1056]
+
+        if bias in dir():
+            self.fimg.data -= bias
             print('Subtracted bias')
         else:
-            print('Bias not subtracted')
-        self.fimg.data = self.fimg.data[1:1027,0:1056]
-        
+            print('Bias not subtracted')        
+                        
     def run(self,
             plot_suffix,
             plot_folder,

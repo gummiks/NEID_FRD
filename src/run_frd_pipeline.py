@@ -70,7 +70,9 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
         
     try:
         bias = fits.open(os.path.join(BASEFOLDER,'bias','median_bias.fits'))[0].data
+        print('Found bias frame')
     except:
+        bias = None
         print('Bias frame not found')
         
 
@@ -91,7 +93,7 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
         ##########################
         # MAIN analysis step
         AFRDImg = AnalyzeFRDImages(fitsfiles = sorted(fitsfiles_f01),
-                                bias_frame = bias,
+                                biasframe = bias,
                                 plot_suffix = FIBER_NAME,
                                 plot_folder = PLOT_FOLDER,
                                 setup_csv_file = setup_csv_files[0],
@@ -124,7 +126,7 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
     
 
 home = 'C:\Users\szk381\Google Drive\PSU-file_storage\NEID\FRD_data'
-fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,"20180618_science6_newpuck_50um",""),FIBER_NAMES = ['HE2','HR2','HR1'])
+fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,"20180708_science4_puck_polished_50um",""),FIBER_NAMES = None)
 
 '''
     data_folders = os.listdir(home)
