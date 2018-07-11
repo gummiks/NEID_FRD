@@ -24,18 +24,12 @@ def add_y_in_xcone(df_config,f_ratio_of_output_cone=3.65):
     df_config["y_in_"+str(f_ratio_of_output_cone)+"_cone"] = (df_config["f_ratio_out"]/f_ratio_of_output_cone)*df_config["y_out_fiber_dist"]
     return df_config
 
-def resample_df_mean(df):
+def resample_df_mean(df,f_ratio_of_output_cone=3.65):
+    eelabel = "EE_in_"+str(f_ratio_of_output_cone)+"_cone"
     chunks = utils.chunker(df,4)
     dff = pd.DataFrame()
     for chunk in chunks:
-        dff = pd.concat([dff,pd.DataFrame(chunk[["f_ratio_in","f_ratio_out","EE_in_input_cone"]].median(skipna=True)).T],
+        dff = pd.concat([dff,pd.DataFrame(chunk[["f_ratio_in","f_ratio_out","EE_in_input_cone",eelabel]].median(skipna=True)).T],
                         ignore_index=True)
     return dff
 
-def resample_df_mean(df):
-    chunks = utils.chunker(df,4)
-    dff = pd.DataFrame()
-    for chunk in chunks:
-        dff = pd.concat([dff,pd.DataFrame(chunk[["f_ratio_in","f_ratio_out","EE_in_input_cone"]].mean(skipna=True)).T],
-                        ignore_index=True)
-    return dff

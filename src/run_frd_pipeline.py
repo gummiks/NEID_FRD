@@ -103,7 +103,7 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
                                 fwzm_z = FWZM,
                                 use_azimuthal_averaging = True,
                                 soft_bg_est = soft_bg_est)
-        AFRDImg.analyze_all_frames()
+        #AFRDImg.analyze_all_frames()
         ##########################
     
     
@@ -124,7 +124,6 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
         df_config_f01 = AFRDImg._get_EE_in_xcone(df_config_f01,suffix=FIBER_NAME,f_ratio_of_output_cone=ADD_F_NUMBER_OUTCONE_VALUE)
         ##########################
        
-    
         # Plot main plot
         frd_plot.plot_final_panel(df_config_f01,fibername=FIBER_NAME,
                                   title=TITLE,outfolder=MASTER_PLOT_FOLDER,
