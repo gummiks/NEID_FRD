@@ -84,7 +84,7 @@ def plot_final_panel(df,fibername,title='FRD main analaysis',outfolder="",f_rati
     utils.make_dir(outfolder)
     savename = os.path.join(outfolder,title+"_"+fibername+'.png')
     fig.subplots_adjust(top=0.9)
-    fig.suptitle(title,fontsize=32,y=0.97)
+    fig.suptitle(title + "_" + fibername,fontsize=32,y=0.97)
     fig.savefig(savename,dpi=200)
     print("Saved final plot to {}".format(savename))
     csvout = os.path.join(outfolder,title+"_"+fibername+'.csv')
@@ -112,10 +112,11 @@ def plot_table(df,round=2,ax=None,fontsize=18,yt_diff=0.07,yt_start=0.9,f_ratio_
     
     columns = []
     yt = yt_start
-    columns = ['F/#in','F/#out','EE in input cone (%)']
+    columns = ['F/#in','F/#out','EE in input','EE3.65']
     ax.annotate(columns[0],xy=(0.05,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
     ax.annotate(columns[1],xy=(0.3,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
     ax.annotate(columns[2],xy=(0.7,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
+    ax.annotate(columns[3],xy=(0.9,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
     yt -= yt_diff
     eelabel = "EE_in_"+str(f_ratio_of_output_cone)+"_cone"
     for l,m,r,rr in zip(df.f_ratio_in, df.f_ratio_out, df.EE_in_input_cone, df[eelabel]):

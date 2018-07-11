@@ -103,7 +103,7 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
                                 fwzm_z = FWZM,
                                 use_azimuthal_averaging = True,
                                 soft_bg_est = soft_bg_est)
-        #AFRDImg.analyze_all_frames()
+        AFRDImg.analyze_all_frames()
         ##########################
     
     
@@ -135,7 +135,7 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
     
 if __name__=="__main__":
     home = 'C:\Users\szk381\Google Drive\PSU-file_storage\NEID\FRD_data'
-    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,"20180708_science4_puck_polished_50um",""),FIBER_NAMES = None)
+    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,"20180711_science2_brassbrass_50um",""),FIBER_NAMES = None)
 
 '''
     data_folders = os.listdir(home)
