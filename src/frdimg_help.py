@@ -17,6 +17,13 @@ def add_y_in_input(df_config):
     df_config["y_in_input"] = (df_config["f_ratio_out"]/df_config["f_ratio_in"])*df_config["y_out_fiber_dist"]
     return df_config
 
+def add_y_in_xcone(df_config,f_ratio_of_output_cone=3.65):
+    """
+    Similar to add_y_in_input, but can do for arbitrary cone
+    """
+    df_config["y_in_"+str(f_ratio_of_output_cone)+"_cone"] = (df_config["f_ratio_out"]/f_ratio_of_output_cone)*df_config["y_out_fiber_dist"]
+    return df_config
+
 def resample_df_mean(df):
     chunks = utils.chunker(df,4)
     dff = pd.DataFrame()

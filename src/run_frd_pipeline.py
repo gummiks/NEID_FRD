@@ -6,7 +6,7 @@ import matplotlib.dates as mdates
 import utils
 import phothelp
 from frdimg import FRDImg, AnalyzeFRDImages
-from frdimg_help import add_y_in_input, resample_df_mean, resample_df_mean, get_EE_from_rad_in_pix
+from frdimg_help import add_y_in_input, add_y_in_xcone, resample_df_mean, resample_df_mean, get_EE_from_rad_in_pix
 import os
 import frd_plot
 import glob
@@ -49,7 +49,7 @@ except Exception as e:
 
 def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_storage\\NEID\\FRD_data\\20180602_science6_polished_50um\\",
                         FOLDER_CSV_SETUP = None,FOLDER_CSV_SAVE = None, PLOT_FOLDER = None, MASTER_PLOT_FOLDER = None, TITLE = None,
-                        MAXRAD_FACTOR      = 0.56, FWZM = 200.,FIBER_NAMES = None, soft_bg_est = True):
+                        MAXRAD_FACTOR      = 0.56, FWZM = 200.,FIBER_NAMES = None, soft_bg_est = True, ADD_F_NUMBER_OUTCONE_VALUE = 3.65):
     print(BASEFOLDER)                   
     if FOLDER_CSV_SETUP == None:
         FOLDER_CSV_SETUP = os.path.join(BASEFOLDER,"ANALYSIS","CSV_SETUP","")
@@ -113,20 +113,30 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
     
         df_config_f01 = pd.read_csv(list_of_df_config[0])
     
+        print("Calculating input/output cone values")
+        # Add column for input cone 
         df_config_f01 = add_y_in_input(df_config_f01)
-    
         df_config_f01 = AFRDImg._get_EE_in_input_cone(df_config_f01,suffix=FIBER_NAME)
+        
+        print("Calculating 3.65 cone values")
+        # Add column for 3.65 ( ADD_F_NUMBER_OUTCONE_VALUE = 3.65 ) input cone
+        df_config_f01 = add_y_in_xcone(df_config_f01,f_ratio_of_output_cone=ADD_F_NUMBER_OUTCONE_VALUE)
+        df_config_f01 = AFRDImg._get_EE_in_xcone(df_config_f01,suffix=FIBER_NAME,f_ratio_of_output_cone=ADD_F_NUMBER_OUTCONE_VALUE)
         ##########################
+       
     
         # Plot main plot
-        frd_plot.plot_final_panel(df_config_f01,fibername=FIBER_NAME,title=TITLE,outfolder=MASTER_PLOT_FOLDER)
+        frd_plot.plot_final_panel(df_config_f01,fibername=FIBER_NAME,
+                                  title=TITLE,outfolder=MASTER_PLOT_FOLDER,
+                                  f_ratio_of_output_cone=ADD_F_NUMBER_OUTCONE_VALUE)
         
         print('DONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+        return df_config_f01
         
     
-
-home = 'C:\Users\szk381\Google Drive\PSU-file_storage\NEID\FRD_data'
-fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,"20180708_science4_puck_polished_50um",""),FIBER_NAMES = None)
+if __name__=="__main__":
+    home = 'C:\Users\szk381\Google Drive\PSU-file_storage\NEID\FRD_data'
+    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,"20180708_science4_puck_polished_50um",""),FIBER_NAMES = None)
 
 '''
     data_folders = os.listdir(home)

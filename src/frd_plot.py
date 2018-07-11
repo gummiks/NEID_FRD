@@ -29,7 +29,7 @@ rcParams['ytick.minor.size']=2
 # ---------- Graphics ------------
 
 
-def plot_final_panel(df,fibername,title='FRD main analaysis',outfolder=""):
+def plot_final_panel(df,fibername,title='FRD main analaysis',outfolder="",f_ratio_of_output_cone=3.65):
     """
     Plot main plot and save it to a folder
     
@@ -83,7 +83,7 @@ def plot_final_panel(df,fibername,title='FRD main analaysis',outfolder=""):
     utils.make_dir(outfolder)
     savename = os.path.join(outfolder,title+"_"+fibername+'.png')
     fig.subplots_adjust(top=0.9)
-    fig.suptitle(title+"_"+fibername,fontsize=32,y=0.97)
+    fig.suptitle(title,fontsize=32,y=0.97)
     fig.savefig(savename,dpi=200)
     print("Saved final plot to {}".format(savename))
     csvout = os.path.join(outfolder,title+"_"+fibername+'.csv')

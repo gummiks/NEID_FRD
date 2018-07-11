@@ -12,7 +12,7 @@ import fitsimg
 #import fitsimagefli
 import phothelp
 from astropy.modeling import models, fitting
-from frdimg_help import add_y_in_input, resample_df_mean, resample_df_mean, get_EE_from_rad_in_pix
+from frdimg_help import add_y_in_input, add_y_in_xcone, resample_df_mean, resample_df_mean, get_EE_from_rad_in_pix
 import filepath
 
 class FRDImg(object):
@@ -326,13 +326,37 @@ class AnalyzeFRDImages(object):
                 filepath.basename 
                 #df_ee = pd.read_csv(self.plot_folder + filepath.barename + "_out.fits_" + suffix + ".csv")
                 df_ee = pd.read_csv(self.plot_folder + filepath.barename + ".fits_" + suffix + ".csv")
-
-                
                 df_config["y_for_EE_in_input_cone"].ix[i] = df_config["y_in_input"].values[i]/self.PIXEL_SCALE
                 print("Rad_in_pix",df_config["y_for_EE_in_input_cone"].ix[i])
                 df_config["EE_in_input_cone"].ix[i]       = get_EE_from_rad_in_pix(df_ee,df_config["y_for_EE_in_input_cone"].ix[i])
             else:
                 df_config["y_for_EE_in_input_cone"].ix[i] = np.nan
                 df_config["EE_in_input_cone"].ix[i]       = np.nan
+                print("Skip!")
+        return df_config
+    
+    def _get_EE_in_xcone(self,df_config,suffix,f_ratio_of_output_cone=3.65):
+        """
+        Get encircled energy in the given input cone.
+        """
+        ylabel = "y_for_EE_in_"+str(f_ratio_of_output_cone)+"_cone"
+        eelabel = "EE_in_"+str(f_ratio_of_output_cone)+"_cone"
+        df_config[ylabel] = np.zeros(len(df_config))
+        df_config[eelabel] = np.zeros(len(df_config))
+
+        for i, filename in enumerate(df_config["filename"].values):
+            print(i)
+            print(filename)
+            if (np.isfinite(df_config["f_ratio_out"].values[i])):
+                filepath = utils.FilePath(filename)
+                filepath.basename 
+                #df_ee = pd.read_csv(self.plot_folder + filepath.barename + "_out.fits_" + suffix + ".csv")
+                df_ee = pd.read_csv(self.plot_folder + filepath.barename + ".fits_" + suffix + ".csv")
+                df_config[ylabel].ix[i] = df_config["y_in_"+str(f_ratio_of_output_cone)+"_cone"].values[i]/self.PIXEL_SCALE
+                print("Rad_in_pix",df_config[ylabel].ix[i])
+                df_config[eelabel].ix[i] = get_EE_from_rad_in_pix(df_ee,df_config[ylabel].ix[i])
+            else:
+                df_config[ylabel].ix[i] = np.nan
+                df_config[eelabel].ix[i] = np.nan
                 print("Skip!")
         return df_config
