@@ -78,7 +78,7 @@ def plot_final_panel(df,fibername,title='FRD main analaysis',outfolder="",f_rati
         xx.grid(lw=0.5,alpha=0.5)
 
     # Plot table
-    plot_table(df_res,round=2,ax=cx)
+    plot_table(df_res,round=2,ax=cx,f_ratio_of_output_cone=3.65)
     fig.tight_layout()
     utils.make_dir(outfolder)
     savename = os.path.join(outfolder,title+"_"+fibername+'.png')
@@ -90,7 +90,7 @@ def plot_final_panel(df,fibername,title='FRD main analaysis',outfolder="",f_rati
     df_res.to_csv(csvout,index=False)
     print('Saved final csv to {}'.format(csvout))
     
-def plot_table(df,round=2,ax=None,fontsize=18,yt_diff=0.07,yt_start=0.9):
+def plot_table(df,round=2,ax=None,fontsize=18,yt_diff=0.07,yt_start=0.9,f_ratio_of_output_cone=3.65):
     """
     Plot a simple table
     
@@ -116,9 +116,11 @@ def plot_table(df,round=2,ax=None,fontsize=18,yt_diff=0.07,yt_start=0.9):
     ax.annotate(columns[1],xy=(0.3,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
     ax.annotate(columns[2],xy=(0.7,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
     yt -= yt_diff
-    for l,m,r in zip(df.f_ratio_in, df.f_ratio_out, df.EE_in_input_cone):
-        ax.annotate('{:0.2f}'.format(l),xy=(0.05,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
-        ax.annotate('{:0.2f}'.format(m),xy=(0.3,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
+    eelabel = "EE_in_"+str(f_ratio_of_output_cone)+"_cone"
+    for l,m,r,rr in zip(df.f_ratio_in, df.f_ratio_out, df.EE_in_input_cone, df[eelabel]):
+        ax.annotate('{:0.2f}'.format(l),xy=(0.05,yt), xycoords='axes fraction',ha='center',fontsize=fontsize)
+        ax.annotate('{:0.2f}'.format(m),xy=(0.3,yt), xycoords='axes fraction',ha='center',fontsize=fontsize)
         ax.annotate('{:0.1f}'.format(r*100.),xy=(0.7,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
+        ax.annotate('{:0.1f}'.format(rr*100.),xy=(0.9,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
         yt -= yt_diff
     ax.axis('off')
