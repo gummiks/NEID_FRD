@@ -135,7 +135,7 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
     
 if __name__=="__main__":
     home = 'C:\Users\szk381\Google Drive\PSU-file_storage\NEID\FRD_data'
-    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,"20180711_science2_brassbrass_50um",""),FIBER_NAMES = None)
+    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,"20180710_science3_brassbrass_50um",""),FIBER_NAMES = ['HE1'])
 
 '''
     data_folders = os.listdir(home)
