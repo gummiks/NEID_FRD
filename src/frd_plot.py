@@ -112,10 +112,10 @@ def plot_table(df,round=2,ax=None,fontsize=18,yt_diff=0.07,yt_start=0.9,f_ratio_
     
     columns = []
     yt = yt_start
-    columns = ['F/#in','F/#out','EE in input','EE for fout3.65']
+    columns = ['F/#in','F/#out','EE in input','EE fout3.65']
     ax.annotate(columns[0],xy=(0.05,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
     ax.annotate(columns[1],xy=(0.3,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
-    ax.annotate(columns[2],xy=(0.7,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
+    ax.annotate(columns[2],xy=(0.6,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
     ax.annotate(columns[3],xy=(0.9,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
     yt -= yt_diff
     eelabel = "EE_in_"+str(f_ratio_of_output_cone)+"_cone"
