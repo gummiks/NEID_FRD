@@ -773,7 +773,7 @@ def chunker(df, size):
     """
     Split dataframe *df* into chunks of size *size*
     """
-    return [df[pos:pos + size] for pos in xrange(0, len(df), size)]
+    return [df[pos:pos + size] for pos in range(0, len(df), size)]
 
 def resample_df(df,new_x_array,old_x_col_name,columns_to_resample=None):
     """
