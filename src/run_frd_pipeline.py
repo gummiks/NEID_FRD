@@ -49,7 +49,7 @@ except Exception as e:
 
 def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_storage\\NEID\\FRD_data\\20180602_science6_polished_50um\\",
                         FOLDER_CSV_SETUP = None,FOLDER_CSV_SAVE = None, PLOT_FOLDER = None, MASTER_PLOT_FOLDER = None, TITLE = None,
-                        MAXRAD_FACTOR      = 0.56, FWZM = 200.,FIBER_NAMES = None, soft_bg_est = False, ADD_F_NUMBER_OUTCONE_VALUE = 3.65):
+                        MAXRAD_FACTOR      = 0.56, FWZM = 200.,FIBER_NAMES = None, soft_bg_est = True, ADD_F_NUMBER_OUTCONE_VALUE = 3.65):
     print(BASEFOLDER)                   
     if FOLDER_CSV_SETUP == None:
         FOLDER_CSV_SETUP = os.path.join(BASEFOLDER,"ANALYSIS","CSV_SETUP","")
@@ -135,13 +135,11 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
     
 if __name__=="__main__":
     home = 'C:\Users\szk381\Google Drive\PSU-file_storage\NEID\FRD_data\Analyzed'
+    home = '/Users/szk381/Google Drive/PSU-file_storage/NEID/FRD_data'	
     folder_name = "20180718_science1_puck_polished_final_50um"
     folder_name = '20180720_neid_test_fiberhead'
-    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,folder_name,""),FIBER_NAMES = ['Oct1_3nmHeNe','Oct2','Oct3','Oct4'])
-    
-    
-'''
-    data_folders = os.listdir(home)
-    for i in data_folders:
-        fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,i,"")) 
-''' 
+    folder_name = '20180725_science6_polished_200um_input'
+    folder_name = '20180731_science6_polished_50um_retest'
+    #folder_name = '20180723_science1_puck_polished_final_brass_polished_final_50um'
+    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,folder_name,""),FIBER_NAMES = ['HR3_diff_alpha_3HeNe'])
+        		
