@@ -134,12 +134,12 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
         
     
 if __name__=="__main__":
-    home = 'C:\Users\szk381\Google Drive\PSU-file_storage\NEID\FRD_data\Analyzed'
-    home = '/Users/szk381/Google Drive/PSU-file_storage/NEID/FRD_data'	
+    home = r'C:\Users\szk381\Google Drive\PSU-file_storage\NEID\FRD_data'
+    #home = '/Users/szk381/Google Drive/PSU-file_storage/NEID/FRD_data'	
     folder_name = "20180718_science1_puck_polished_final_50um"
     folder_name = '20180720_neid_test_fiberhead'
     folder_name = '20180725_science6_polished_200um_input'
-    folder_name = '20180731_science6_polished_50um_retest'
+    folder_name = '20180803_science4_retest'
     #folder_name = '20180723_science1_puck_polished_final_brass_polished_final_50um'
-    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,folder_name,""),FIBER_NAMES = ['HR3_diff_alpha_3HeNe'])
+    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,folder_name,""),FIBER_NAMES = ['HR3'])
         		

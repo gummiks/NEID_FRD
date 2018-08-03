@@ -131,7 +131,7 @@ def get_encircled_energy_and_rad_at_EE(data,x,y,radii,get_rad_at_EE=0.9,plot=Fal
     df = phot_table[phot_table.colnames[3:]].to_pandas()
     EE = df.loc[0]/df.loc[0][-1]
     
-    df = pd.DataFrame(zip(radii,EE),columns=["radii","EE"])
+    df = pd.DataFrame(list(zip(radii,EE)),columns=["radii","EE"])
 
     #r_at_EE = df[df["EE"] > get_rad_at_EE]["radii"].values[0]
     r_at_EE = np.interp(get_rad_at_EE,df.EE.values,df.radii.values)
