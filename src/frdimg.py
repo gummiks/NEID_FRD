@@ -108,7 +108,7 @@ class FRDImg(object):
             self.max_radii_for_EE = _r_hwzm*2.*MAXRAD_FACTOR
             if force_max_radii_to_390 == True:
                 print("FORCING MAX RADII TO 390")
-                self.max_radii_for_EE = 490.
+                self.max_radii_for_EE = 390.
         else:
             print("Not using azimuthal averaging, Using mean(X+Y) cutouts")
             cut_x, self.fwhm_x = self.fimg.get_centroid_line_cut(line="X",return_FWHM=True,plot=True,ax=ax_cut,use_butter_filter=True,butter_cutoff_freq=0.03,fwzm_z=fwzm_z)
@@ -123,7 +123,7 @@ class FRDImg(object):
         # -------------
         # Plot #4: Encircled energy plot
         
-
+        print('Max radii for EE = {}'.format(self.max_radii_for_EE))
         radii = np.arange(1,self.max_radii_for_EE)
         df, self.r_ee = phothelp.get_encircled_energy_and_rad_at_EE(self.fimg.data,
                                                                     self.fimg.xcenter,
