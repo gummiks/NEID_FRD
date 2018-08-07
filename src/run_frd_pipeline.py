@@ -49,7 +49,7 @@ except Exception as e:
 
 def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_storage\\NEID\\FRD_data\\20180602_science6_polished_50um\\",
                         FOLDER_CSV_SETUP = None,FOLDER_CSV_SAVE = None, PLOT_FOLDER = None, MASTER_PLOT_FOLDER = None, TITLE = None,
-                        MAXRAD_FACTOR      = 0.56, FWZM = 200.,FIBER_NAMES = None, soft_bg_est = True, ADD_F_NUMBER_OUTCONE_VALUE = 3.65):
+                        MAXRAD_FACTOR      = 0.52, FWZM = 200.,FIBER_NAMES = None, soft_bg_est = True, ADD_F_NUMBER_OUTCONE_VALUE = 3.65):
     print(BASEFOLDER)                   
     if FOLDER_CSV_SETUP == None:
         FOLDER_CSV_SETUP = os.path.join(BASEFOLDER,"ANALYSIS","CSV_SETUP","")
@@ -141,5 +141,6 @@ if __name__=="__main__":
     folder_name = '20180725_science6_polished_200um_input'
     folder_name = '20180803_science4_retest'
     #folder_name = '20180723_science1_puck_polished_final_brass_polished_final_50um'
-    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,folder_name,""),FIBER_NAMES = ['HR3'])
+    folder_name = '20180806_science4_thorlabs_635'
+    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,folder_name,""),FIBER_NAMES = ['HR2_Intsph - Copy'])
         		
