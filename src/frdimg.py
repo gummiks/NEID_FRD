@@ -194,10 +194,14 @@ class AnalyzeFRDImages(object):
         self.plot_suffix      = plot_suffix
         self.plot_folder      = plot_folder
         self.setup_csv_file   = setup_csv_file
+        print("Using",self.setup_csv_file)
         self.FOLDER_CSV_SAVE  = FOLDER_CSV_SAVE
         self.MOTORIZED        = True # using motorized iris or not ?
         self.f_number_names   = pd.Series([filepath.FilePath(filename).basename.split("_")[2] for filename in self.fitsfiles]).unique()
         self.NUM_F_NUMBERS    = len(self.f_number_names) # Number of different F-numbers measured
+        # print('Number of f/# names are', self.NUM_F_NUMBERS)
+        # print('They are', self.f_number_names)
+
         self.get_rad_at_EE    = get_rad_at_EE # What EE to get
         self.MAXRAD_FACTOR    = MAXRAD_FACTOR # The factor to multiply the average of FWHM_X and FWHM_Y to set as the maximum radius
         self.BACKUP_FILE_NAME = self.FOLDER_CSV_SAVE + self.plot_suffix + "_radii_fwhm_subtracted.npz"
@@ -224,7 +228,7 @@ class AnalyzeFRDImages(object):
         """
         # Filenames are f_psm_01_d_01.fits
         # Select only measurements for a given input F-number
-        df = df_config[df_config.filename.isin(["f_psm_"+frat+"_d_"+str(i).zfill(2)+".fits" for i in range(1,12)])]
+        df = df_config[df_config.filename.isin(["f_psm_"+frat+"_d_"+str(i).zfill(2)+".fits" for i in range(1,int(len(self.fitsfiles)/4))])]
         df = df.reset_index(drop=True)
         df = df[startnum:]
         
@@ -264,7 +268,7 @@ class AnalyzeFRDImages(object):
         df_config["radii_at_EE"] = radii_at_EE
         df_config["sub_values"]  = subtracted_values
         df_config["y_out_fiber_dist"] = df_config["radii_at_EE"]*self.PIXEL_SCALE
-        df_config = pd.concat([self._get_df(df_config,frat=str(i).zfill(2)) for i in range(1,self.NUM_F_NUMBERS+1)],ignore_index=True)
+        df_config = pd.concat([self._get_df(df_config,frat=i) for i in self.f_number_names],ignore_index=True)
         if save:
             df_config.to_csv(os.path.join(self.FOLDER_CSV_SAVE,'df_config_{}'.format(filepath.basename)))
             #df_config.to_csv(os.path.join(self.FOLDER_CSV_SAVE,filepath.basename))
@@ -323,6 +327,7 @@ class AnalyzeFRDImages(object):
             print(filename)
             if (np.isfinite(df_config["f_ratio_out"].values[i])):
                 filepath = utils.FilePath(filename)
+                print(filepath)
                 filepath.basename 
                 #df_ee = pd.read_csv(self.plot_folder + filepath.barename + "_out.fits_" + suffix + ".csv")
                 df_ee = pd.read_csv(self.plot_folder + filepath.barename + ".fits_" + suffix + ".csv")

@@ -47,7 +47,7 @@ except Exception as e:
    
 #BASEFOLDER         = "/Users/gks/Dropbox/mypylib/data/NEID_FRD/20180602_HPF_fiberC_200um/"   
 
-def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_storage\\NEID\\FRD_data\\20180602_science6_polished_50um\\",
+def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\shbhu\\Google Drive\\PSU-file_storage\\NEID\\FRD_data\\20180602_science6_polished_50um\\",
                         FOLDER_CSV_SETUP = None,FOLDER_CSV_SAVE = None, PLOT_FOLDER = None, MASTER_PLOT_FOLDER = None, TITLE = None,
                         MAXRAD_FACTOR      = 0.54, FWZM = 200.,FIBER_NAMES = None, soft_bg_est = True, ADD_F_NUMBER_OUTCONE_VALUE = 3.65):
     print(BASEFOLDER)                   
@@ -69,6 +69,7 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
         print(FIBER_NAMES)
         
     try:
+        print(os.path.join(BASEFOLDER,'bias','median_bias.fits'))
         bias = fits.open(os.path.join(BASEFOLDER,'bias','median_bias.fits'))[0].data
         print('Found bias frame')
     except:
@@ -80,9 +81,15 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
         
     # Run for all fibers
     for FIBER_NAME in FIBER_NAMES: 
+        FIBER_FOLDER = os.path.join(BASEFOLDER,FIBER_NAME)  
+        setup_csv = [os.path.join(FIBER_FOLDER,f) for f in os.listdir(FIBER_FOLDER) if f[-4:]=='.csv']
+        if len(setup_csv)!=0:
+            setup_csv_files = setup_csv
+        else:
+            setup_csv_files  = sorted(glob.glob(FOLDER_CSV_SETUP+"*.csv")) 
+                
     
         # Files
-        setup_csv_files  = sorted(glob.glob(FOLDER_CSV_SETUP+"*.csv"))
         fitsfiles_f01    = glob.glob(BASEFOLDER+FIBER_NAME+"/*.fits")
         
         if len(fitsfiles_f01) <= 2:
@@ -111,7 +118,7 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
         # Find  .csv files
         list_of_df_config = sorted(glob.glob(FOLDER_CSV_SAVE+"*.csv"))
     
-        df_config_f01 = pd.read_csv(list_of_df_config[0])
+        df_config_f01 = pd.read_csv(os.path.join(FOLDER_CSV_SAVE, 'df_config_'+os.path.basename(setup_csv_files[0])))
     
         print("Calculating input/output cone values")
         # Add column for input cone 
@@ -134,12 +141,13 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\szk381\\Google Drive\\PSU-file_
         
     
 if __name__=="__main__":
-    home = r'C:\Users\szk381\Google Drive\PSU-file_storage\NEID\FRD_data'
-    #home = '/Users/szk381/Google Drive/PSU-file_storage/NEID/FRD_data'	
-    folder_name = "20180718_science1_puck_polished_final_50um"
-    folder_name = '20180720_neid_test_fiberhead'
-    folder_name = '20180725_science6_polished_200um_input'
-    folder_name = '20180803_science4_retest'
-    #folder_name = '20180723_science1_puck_polished_final_brass_polished_final_50um'
-    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,folder_name,""),FIBER_NAMES = ['HR3'])
+    home = r'C:\Users\shbhu\Google Drive\PSU-file_storage\NEID\FRD_data'
+    # home = r'/Users/elubar/Documents/FRD_data'
+
+    #folder_name = "20180718_science1_puck_polished_final_50um"
+    #folder_name = '20190221_telescope_fiber_HR1_Thorlabssource_50um'
+    folder_name = '20190223_telescopefiber_he1_thorlabsource_giga_50um'
+    folder_name = r'20190612_Sci6_NewPuck'
+
+    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,folder_name,""),FIBER_NAMES = ['HR3_shorttest'], ADD_F_NUMBER_OUTCONE_VALUE = 3.65)
         		
