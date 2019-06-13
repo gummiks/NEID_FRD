@@ -115,9 +115,7 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\shbhu\\Google Drive\\PSU-file_s
     
     
         ##########################
-        # Find  .csv files
-        list_of_df_config = sorted(glob.glob(FOLDER_CSV_SAVE+"*.csv"))
-    
+        # Find  .csv files    
         df_config_f01 = pd.read_csv(os.path.join(FOLDER_CSV_SAVE, 'df_config_'+os.path.basename(setup_csv_files[0])))
     
         print("Calculating input/output cone values")
@@ -149,5 +147,5 @@ if __name__=="__main__":
     folder_name = '20190223_telescopefiber_he1_thorlabsource_giga_50um'
     folder_name = r'20190612_Sci6_NewPuck'
 
-    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,folder_name,""),FIBER_NAMES = ['HR3_shorttest'], ADD_F_NUMBER_OUTCONE_VALUE = 3.65)
+    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,folder_name,""),FIBER_NAMES = ['HR2'], ADD_F_NUMBER_OUTCONE_VALUE = 3.65)
         		
