@@ -49,7 +49,7 @@ def plot_final_panel(df,fibername,title='FRD main analaysis',outfolder="",f_rati
         plot_final_panel(df_config_f01,outfolder=BASEFOLDER)
     """
     # Resample
-    df_mean = resample_df_mean(df)
+    df_mean = resample_df_mean(df, f_ratio_of_output_cone)
     resample_array = [2.5,3.33,3.5,3.65,4.,5.,6.,7.]
     resample_array = [2.5,2.73,3.,3.33,3.5,3.65,3.75,4.,4.62,5.,6.,6.67,7.]
 
@@ -79,7 +79,7 @@ def plot_final_panel(df,fibername,title='FRD main analaysis',outfolder="",f_rati
 
     # Plot table
     #print(df_res.keys())
-    plot_table(df_res,round=2,ax=cx,f_ratio_of_output_cone=3.65)
+    plot_table(df_res,round=2,ax=cx,f_ratio_of_output_cone=f_ratio_of_output_cone)
     fig.tight_layout()
     utils.make_dir(outfolder)
     savename = os.path.join(outfolder,title+"_"+fibername+'.png')
@@ -112,7 +112,7 @@ def plot_table(df,round=2,ax=None,fontsize=18,yt_diff=0.07,yt_start=0.9,f_ratio_
     
     columns = []
     yt = yt_start
-    columns = ['F/#in','F/#out','EE in input','EE fout3.65']
+    columns = ['F/#in','F/#out','EE in input','EE fout_{}'.format(f_ratio_of_output_cone)]
     ax.annotate(columns[0],xy=(0.05,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
     ax.annotate(columns[1],xy=(0.3,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
     ax.annotate(columns[2],xy=(0.6,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)

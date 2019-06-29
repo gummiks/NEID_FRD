@@ -144,8 +144,6 @@ if __name__=="__main__":
 
     #folder_name = "20180718_science1_puck_polished_final_50um"
     #folder_name = '20190221_telescope_fiber_HR1_Thorlabssource_50um'
-    folder_name = '20190223_telescopefiber_he1_thorlabsource_giga_50um'
-    folder_name = r'C:\Users\shbhu\Google Drive\PSU-file_storage\NEID\FRD_data\20190619_Sci6_strain_relief_check'
+    folder_name = r'20190629_sci6_L1glued'
 
-    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,folder_name,""),FIBER_NAMES = ['HR3'], ADD_F_NUMBER_OUTCONE_VALUE = 3.65)
-        		
+    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,folder_name,""),FIBER_NAMES = ['HR3'], ADD_F_NUMBER_OUTCONE_VALUE = 7.9)       		
