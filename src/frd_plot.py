@@ -69,9 +69,10 @@ def plot_final_panel(df,fibername,title='FRD main analaysis',outfolder="",f_rati
     ax.scatter(df.f_ratio_in,df.f_ratio_out,color=cp[0],alpha=0.8,s=10,marker="1")
     
     # EE Plot
-    bx.plot(df_res.f_ratio_in,df_res.EE_in_input_cone,label="",color=cp[0],alpha=0.8,lw=1,marker="o",markersize=5)
+    eelabel = "EE_in_"+str(f_ratio_of_output_cone)+"_cone"
+    bx.plot(df_res.f_ratio_in,df_res[eelabel], label="",color=cp[0],alpha=0.8,lw=1,marker="o",markersize=5)
     bx.set_xlabel("Input F/#")
-    bx.set_ylabel("Output EE within input F/#")
+    bx.set_ylabel("Output EE within F/{}".format(f_ratio_of_output_cone))
     
     for xx in [ax,bx]:
         xx.minorticks_on()
@@ -123,7 +124,7 @@ def plot_table(df,round=2,ax=None,fontsize=18,yt_diff=0.07,yt_start=0.9,f_ratio_
     #for l,m,r in zip(df.f_ratio_in, df.f_ratio_out, df.EE_in_input_cone):# df[eelabel]):
         ax.annotate('{:0.2f}'.format(l),xy=(0.05,yt), xycoords='axes fraction',ha='center',fontsize=fontsize)
         ax.annotate('{:0.2f}'.format(m),xy=(0.3,yt), xycoords='axes fraction',ha='center',fontsize=fontsize)
-        ax.annotate('{:0.1f}'.format(r*100.),xy=(0.7,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
+        ax.annotate('{:0.1f}'.format(r*100.),xy=(0.6,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
         ax.annotate('{:0.1f}'.format(rr*100.),xy=(0.9,yt),xycoords='axes fraction',ha='center',fontsize=fontsize)
         yt -= yt_diff
     ax.axis('off')
