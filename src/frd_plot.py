@@ -91,6 +91,16 @@ def plot_final_panel(df,fibername,title='FRD main analaysis',outfolder="",f_rati
     csvout = os.path.join(outfolder,title+"_"+fibername+'.csv')
     df_res.to_csv(csvout,index=False)
     print('Saved final csv to {}'.format(csvout))
+    print("""
+    
+	______                _____                   
+	| ___ \              |  _  |                  
+	| |_/ /_   _  _ __   | | | |__   __ ___  _ __ 
+	|    /| | | || '_ \  | | | |\ \ / // _ \| '__|
+	| |\ \| |_| || | | | \ \_/ / \ V /|  __/| |   
+	\_| \_|\__,_||_| |_|  \___/   \_/  \___||_|   
+
+    """)
     
 def plot_table(df,round=2,ax=None,fontsize=18,yt_diff=0.07,yt_start=0.9,f_ratio_of_output_cone=3.65):
     """

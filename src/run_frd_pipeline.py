@@ -144,6 +144,6 @@ if __name__=="__main__":
 
     #folder_name = "20180718_science1_puck_polished_final_50um"
     #folder_name = '20190221_telescope_fiber_HR1_Thorlabssource_50um'
-    folder_name = r'20190629_sci6_L1glued'
+    folder_name = r'20190703_Sci1_HE2respliced'
 
-    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,folder_name,""),FIBER_NAMES = ['HE2'], ADD_F_NUMBER_OUTCONE_VALUE = 7.9)       		
+    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,folder_name,""),FIBER_NAMES = ['HE2_F'], ADD_F_NUMBER_OUTCONE_VALUE = 3.65)       		
