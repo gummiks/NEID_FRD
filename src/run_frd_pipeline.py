@@ -134,7 +134,7 @@ def fn_analyze_FRD_data(BASEFOLDER = "C:\\Users\\shbhu\\Google Drive\\PSU-file_s
                                   title=TITLE,outfolder=MASTER_PLOT_FOLDER,
                                   f_ratio_of_output_cone=ADD_F_NUMBER_OUTCONE_VALUE)
         
-        print('DONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+        # print('DONE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
     return df_config_f01
         
     
@@ -146,4 +146,4 @@ if __name__=="__main__":
     #folder_name = '20190221_telescope_fiber_HR1_Thorlabssource_50um'
     folder_name = r'20190703_Sci1_HE2respliced'
 
-    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,folder_name,""),FIBER_NAMES = ['HE2_F'], ADD_F_NUMBER_OUTCONE_VALUE = 3.65)       		
+    fn_analyze_FRD_data(BASEFOLDER = os.path.join(home,folder_name,""),FIBER_NAMES = ['HR2_F'], ADD_F_NUMBER_OUTCONE_VALUE = 3.65)       		

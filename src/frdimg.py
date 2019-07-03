@@ -105,7 +105,7 @@ class FRDImg(object):
             #self.max_radii_for_EE = 
             print("Using azimuthal averaging")
             _r,_mean,_r_hwzm = self.fimg.get_radial_profile(rmax=500,plot=True,z=fwzm_z,return_hwzm=True,ax=ax_cut,xcen=x,ycen=y,subtract_min=True) # 500 ~2/1024
-            self.max_radii_for_EE = _r_hwzm*2.*MAXRAD_FACTOR
+            self.max_radii_for_EE = (_r_hwzm*2.*MAXRAD_FACTOR)[0]
             if force_max_radii_to_390 == True:
                 print("FORCING MAX RADII TO 390")
                 self.max_radii_for_EE = 390.
